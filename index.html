@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apéro Matchada — Ano I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbedff;
+    --sage:#80927e;
+    --sage-soft:#a3b19f;
+    --purple:#725e97;
+    --purple-deep:#5a4879;
+    --card:#fffdfb;
+    --line: rgba(114,94,151,0.18);
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    background-image:
+      radial-gradient(circle at 8% 12%, rgba(128,146,126,0.10), transparent 40%),
+      radial-gradient(circle at 92% 85%, rgba(114,94,151,0.12), transparent 45%);
+    font-family:'Work Sans', sans-serif;
+    color:var(--purple-deep);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:56px 20px 80px;
+  }
+
+  .page{
+    width:100%;
+    max-width:460px;
+  }
+
+  /* signature: matcha bowl + whisk mark */
+  .mark{
+    width:64px;
+    height:64px;
+    margin:0 auto 22px;
+    display:block;
+  }
+
+  .eyebrow{
+    text-align:center;
+    font-size:12.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--sage);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:44px;
+    line-height:1.04;
+    text-align:center;
+    margin:0 0 6px;
+    color:var(--purple);
+  }
+
+  .subtitle{
+    text-align:center;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:19px;
+    color:var(--sage);
+    margin:0 0 30px;
+  }
+
+  .welcome{
+    text-align:center;
+    font-size:16px;
+    line-height:1.6;
+    color:var(--purple-deep);
+    margin:0 0 26px;
+    padding:0 8px;
+  }
+
+  .details{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px 22px;
+    margin-bottom:32px;
+    box-shadow: 0 12px 30px -18px rgba(90,72,121,0.35);
+  }
+
+  .detail-row{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    font-size:15px;
+    padding:8px 0;
+  }
+  .detail-row + .detail-row{
+    border-top:1px solid var(--line);
+  }
+
+  .detail-row .ic{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    margin-top:1px;
+  }
+
+  .detail-row .label{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--sage);
+    font-weight:600;
+    margin-bottom:2px;
+  }
+  .detail-row .value{
+    color:var(--purple-deep);
+    font-weight:500;
+  }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 22px;
+  }
+  .divider .line{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  .divider span{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--sage);
+  }
+
+  form{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:24px;
+    box-shadow: 0 12px 30px -18px rgba(90,72,121,0.35);
+  }
+
+  label.field-label{
+    display:block;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    font-weight:600;
+    color:var(--purple);
+    margin-bottom:8px;
+  }
+
+  input[type="text"]{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    font-family:'Work Sans', sans-serif;
+    font-size:15px;
+    color:var(--purple-deep);
+    margin-bottom:20px;
+    outline:none;
+    transition: border-color .15s ease;
+  }
+  input[type="text"]:focus{
+    border-color:var(--purple);
+  }
+  input[type="text"]::placeholder{
+    color:#b7a9c9;
+  }
+
+  .choice-group{
+    display:flex;
+    gap:10px;
+    margin-bottom:22px;
+  }
+
+  .choice{
+    flex:1;
+    position:relative;
+  }
+  .choice input{
+    position:absolute;
+    opacity:0;
+    width:100%;
+    height:100%;
+    margin:0;
+    cursor:pointer;
+  }
+  .choice .btn-face{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:14px 8px;
+    font-size:14px;
+    font-weight:600;
+    color:var(--purple-deep);
+    background:#fff;
+    transition: all .15s ease;
+  }
+  .choice input:checked + .btn-face{
+    border-color: var(--sage);
+    background: rgba(128,146,126,0.12);
+    color: var(--sage);
+  }
+  .choice:nth-child(2) input:checked + .btn-face{
+    border-color: var(--purple);
+    background: rgba(114,94,151,0.10);
+    color: var(--purple);
+  }
+  .choice .btn-face:focus-visible{
+    outline: 2px solid var(--purple);
+    outline-offset: 2px;
+  }
+  .choice input:focus-visible + .btn-face{
+    outline: 2px solid var(--purple);
+    outline-offset: 2px;
+  }
+
+  button.submit{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background: var(--purple);
+    color:#fff;
+    font-family:'Work Sans', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:0.01em;
+    cursor:pointer;
+    transition: background .15s ease, transform .1s ease;
+  }
+  button.submit:hover{ background: var(--purple-deep); }
+  button.submit:active{ transform: scale(0.99); }
+  button.submit:disabled{
+    background:#c9bfd7;
+    cursor:default;
+  }
+  button.submit:focus-visible{
+    outline: 2px solid var(--purple-deep);
+    outline-offset: 2px;
+  }
+
+  .status-msg{
+    text-align:center;
+    font-size:13.5px;
+    margin-top:14px;
+    color:var(--sage);
+    min-height:18px;
+  }
+  .status-msg.error{ color:#a5555b; }
+
+  /* Guest list */
+  .guestlist{
+    margin-top:36px;
+  }
+
+  .guestlist-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+
+  .guestlist-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+    color:var(--purple);
+    margin:0;
+  }
+
+  .count-pill{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--sage);
+    background:rgba(128,146,126,0.14);
+    padding:4px 10px;
+    border-radius:999px;
+  }
+
+  ul.guests{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  ul.guests li{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--purple-deep);
+  }
+
+  ul.guests li .tag{
+    font-size:16px;
+  }
+
+  .empty-state{
+    text-align:center;
+    font-size:14px;
+    color:var(--sage-soft);
+    font-style:italic;
+    padding:20px 0;
+  }
+
+  details.declined-wrap{
+    margin-top:16px;
+  }
+  details.declined-wrap summary{
+    font-size:12.5px;
+    color:var(--sage-soft);
+    cursor:pointer;
+    letter-spacing:0.02em;
+  }
+  details.declined-wrap ul{
+    margin-top:10px;
+  }
+
+  .refresh-row{
+    text-align:center;
+    margin-top:18px;
+  }
+  .refresh-row button{
+    background:none;
+    border:none;
+    color:var(--sage);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:3px;
+    padding:6px;
+  }
+
+  .footer-note{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--sage-soft);
+    margin-top:40px;
+    line-height:1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <svg class="mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M14 30C14 30 16 46 20 52C22 55 42 55 44 52C48 46 50 30 50 30" stroke="#80927e" stroke-width="2.4" stroke-linecap="round"/>
+    <ellipse cx="32" cy="30" rx="18" ry="4.5" stroke="#725e97" stroke-width="2.4"/>
+    <path d="M32 12V26" stroke="#725e97" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M25 15L32 12L39 15" stroke="#725e97" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M28 18C28 18 30 20 32 20C34 20 36 18 36 18" stroke="#80927e" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+
+  <p class="eyebrow">Você está convidado(a)</p>
+  <h1>Apéro Matchada</h1>
+  <p class="subtitle">Brunch Alcoólico · Ano I</p>
+
+  <p class="welcome">Bem-vindo! Vem celebrar o primeiro aniversário do Apéro Matchada com a gente — matcha, drinks e boa companhia num domingo de sol.</p>
+
+  <div class="details">
+    <div class="detail-row">
+      <svg class="ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="#725e97" stroke-width="1.6"/><path d="M3 10H21" stroke="#725e97" stroke-width="1.6"/><path d="M8 3V7" stroke="#725e97" stroke-width="1.6" stroke-linecap="round"/><path d="M16 3V7" stroke="#725e97" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div>
+        <span class="label">Quando</span>
+        <span class="value">Domingo, 20/09 · 11h</span>
+      </div>
+    </div>
+    <div class="detail-row">
+      <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M12 22C12 22 19 15.5 19 10A7 7 0 0 0 5 10C5 15.5 12 22 12 22Z" stroke="#80927e" stroke-width="1.6"/><circle cx="12" cy="10" r="2.5" stroke="#80927e" stroke-width="1.6"/></svg>
+      <div>
+        <span class="label">Onde</span>
+        <span class="value">Rua Voluntários da Pátria, 48</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><span class="line line"></span><span>confirme presença</span><span class="line"></span></div>
+
+  <form id="rsvp-form">
+    <label class="field-label" for="name">Seu nome</label>
+    <input type="text" id="name" name="name" placeholder="Como podemos te chamar?" required maxlength="60" autocomplete="name">
+
+    <label class="field-label">Você vai?</label>
+    <div class="choice-group">
+      <label class="choice">
+        <input type="radio" name="status" value="vai" required>
+        <span class="btn-face"><span>🎉</span><span>Vou!</span></span>
+      </label>
+      <label class="choice">
+        <input type="radio" name="status" value="nao">
+        <span class="btn-face"><span>😢</span><span>Não vou</span></span>
+      </label>
+    </div>
+
+    <button type="submit" class="submit" id="submit-btn">Confirmar presença</button>
+    <p class="status-msg" id="status-msg" role="status" aria-live="polite"></p>
+  </form>
+
+  <div class="guestlist">
+    <div class="guestlist-head">
+      <h2>Quem já confirmou</h2>
+      <span class="count-pill" id="count-pill">—</span>
+    </div>
+    <ul class="guests" id="guest-list"></ul>
+    <p class="empty-state" id="empty-state" style="display:none;">Ainda ninguém confirmou. Seja a primeira pessoa! 🍵</p>
+
+    <details class="declined-wrap" id="declined-wrap" style="display:none;">
+      <summary id="declined-summary">Ver quem não vai poder ir</summary>
+      <ul class="guests" id="declined-list"></ul>
+    </details>
+
+    <div class="refresh-row">
+      <button type="button" id="refresh-btn">Atualizar lista</button>
+    </div>
+  </div>
+
+  <p class="footer-note">As confirmações ficam salvas e visíveis para quem tiver este link.</p>
+</div>
+
+<script>
+  const form = document.getElementById('rsvp-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const statusMsg = document.getElementById('status-msg');
+  const guestList = document.getElementById('guest-list');
+  const declinedList = document.getElementById('declined-list');
+  const declinedWrap = document.getElementById('declined-wrap');
+  const declinedSummary = document.getElementById('declined-summary');
+  const emptyState = document.getElementById('empty-state');
+  const countPill = document.getElementById('count-pill');
+  const refreshBtn = document.getElementById('refresh-btn');
+
+  function escapeHtml(str){
+    return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  async function loadGuests(){
+    countPill.textContent = '...';
+    guestList.innerHTML = '';
+    declinedList.innerHTML = '';
+    let keysResult;
+    try{
+      keysResult = await window.storage.list('rsvp:', true);
+    }catch(e){
+      countPill.textContent = '—';
+      emptyState.style.display = 'block';
+      emptyState.textContent = 'Não foi possível carregar a lista agora.';
+      return;
+    }
+
+    const keys = (keysResult && keysResult.keys) ? keysResult.keys : [];
+
+    if(keys.length === 0){
+      countPill.textContent = '0 confirmados';
+      emptyState.style.display = 'block';
+      emptyState.textContent = 'Ainda ninguém confirmou. Seja a primeira pessoa! 🍵';
+      declinedWrap.style.display = 'none';
+      return;
+    }
+
+    const entries = [];
+    for(const key of keys){
+      try{
+        const res = await window.storage.get(key, true);
+        if(res && res.value){
+          entries.push(JSON.parse(res.value));
+        }
+      }catch(e){ /* skip unreadable entry */ }
+    }
+
+    entries.sort((a,b) => (a.timestamp || 0) - (b.timestamp || 0));
+
+    const going = entries.filter(e => e.status === 'vai');
+    const notGoing = entries.filter(e => e.status === 'nao');
+
+    if(going.length === 0){
+      emptyState.style.display = 'block';
+      emptyState.textContent = 'Ainda ninguém confirmou presença. Seja a primeira pessoa! 🍵';
+    } else {
+      emptyState.style.display = 'none';
+      going.forEach(g => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${escapeHtml(g.name)}</span><span class="tag">🎉</span>`;
+        guestList.appendChild(li);
+      });
+    }
+
+    countPill.textContent = going.length === 1 ? '1 confirmado' : `${going.length} confirmados`;
+
+    if(notGoing.length > 0){
+      declinedWrap.style.display = 'block';
+      declinedSummary.textContent = `Ver quem não vai poder ir (${notGoing.length})`;
+      notGoing.forEach(g => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${escapeHtml(g.name)}</span><span class="tag">😢</span>`;
+        declinedList.appendChild(li);
+      });
+    } else {
+      declinedWrap.style.display = 'none';
+    }
+  }
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const statusInput = form.querySelector('input[name="status"]:checked');
+
+    if(!name || !statusInput){
+      statusMsg.textContent = 'Preencha seu nome e diga se vai vir.';
+      statusMsg.classList.add('error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    statusMsg.classList.remove('error');
+    statusMsg.textContent = 'Salvando...';
+
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
+    const entry = { name, status: statusInput.value, timestamp: Date.now() };
+
+    try{
+      const result = await window.storage.set(`rsvp:${id}`, JSON.stringify(entry), true);
+      if(!result){ throw new Error('save failed'); }
+      statusMsg.classList.remove('error');
+      statusMsg.textContent = statusInput.value === 'vai'
+        ? 'Presença confirmada! Até domingo 🍵'
+        : 'Que pena! Obrigado por avisar.';
+      form.reset();
+      await loadGuests();
+    }catch(e){
+      statusMsg.classList.add('error');
+      statusMsg.textContent = 'Não deu para salvar agora. Tenta de novo em instantes.';
+    }finally{
+      submitBtn.disabled = false;
+    }
+  });
+
+  refreshBtn.addEventListener('click', loadGuests);
+
+  loadGuests();
+</script>
+</body>
+</html>
